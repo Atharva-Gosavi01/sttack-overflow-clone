@@ -24,7 +24,7 @@ const QuestionsDetails = () => {
   const dispatch = useDispatch();
   const User = useSelector((state) => state.currentUserReducer);
   const location = useLocation();
-  const url = "https://sttack-overflow-clone.onrender.com";
+  const url = "https://clonestackoverflowbyfog.netlify.app/";
 
   const handlePostAns = (e, answerLength) => {
     e.preventDefault();

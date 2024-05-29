@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import decode from "jwt-decode";
@@ -12,14 +12,14 @@ import bars from "../../assets/bars-solid.svg";
 
 const Navbar = ({ handleSlideIn }) => {
   const dispatch = useDispatch();
-  var User = useSelector((state) => state.currentUserReducer);
+  const User = useSelector((state) => state.currentUserReducer);
   const navigate = useNavigate();
 
-  const handleLogout = () => {
+  const handleLogout = useCallback(() => {
     dispatch({ type: "LOGOUT" });
     navigate("/");
     dispatch(setCurrentUser(null));
-  };
+  }, [dispatch, navigate]);
 
   useEffect(() => {
     const token = User?.token;
@@ -30,12 +30,12 @@ const Navbar = ({ handleSlideIn }) => {
       }
     }
     dispatch(setCurrentUser(JSON.parse(localStorage.getItem("Profile"))));
-  }, [User?.token, dispatch]);
+  }, [User?.token, dispatch, handleLogout]);
 
   return (
     <nav className="main-nav">
       <div className="navbar">
-        <button className="slide-in-icon" onClick={() => handleSlideIn()}>
+        <button className="slide-in-icon" onClick={handleSlideIn}>
           <img src={bars} alt="bars" width="15" />
         </button>
         <div className="navbar-1">
